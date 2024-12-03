@@ -1,7 +1,10 @@
 <template>
-    <h1>All destinations</h1>
+    <DestinationsView></DestinationsView>
 </template>
-
+  
 <script setup>
-import 
+import DestinationsView from './DestinationsView.vue';
+
 </script>
+
+  

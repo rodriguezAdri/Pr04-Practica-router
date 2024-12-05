@@ -1,6 +1,11 @@
 <template>
-  <Header></Header>
-  <RouterView></RouterView>
+  <div class="nav">
+    <Header></Header>
+  </div>
+ 
+  <div class="container">
+    <RouterView></RouterView>
+  </div>
 </template>
 
 <script setup>

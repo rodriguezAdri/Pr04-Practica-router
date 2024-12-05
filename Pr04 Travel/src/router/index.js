@@ -12,14 +12,14 @@ const router = createRouter({
     {
       path: '/destination/:id',
       name: 'Destinations',
-      component: () => import('../components/Destinations.vue')
+      component: () => import('../views/DestinationsView.vue')
     },
     {
-      path: '/destinationView',
-      name: 'DestinationsView',
-      component: () => import('../views/DestinationsView.vue')
-    }
-  ],
+      path: '/detailDestination/:id',
+      name: 'DetailDestinationView',
+      component: () => import('../views/DetailDestinationView.vue')
+    },
+  ]
 })
 
 export default router

@@ -1,12 +1,12 @@
 <template>
     <div v-if="destination">
-      <img :src="destination.image"/>
+      <img :src="getImagePath(destination.image)"/>
       <h2>{{ destination.name }}</h2>
       <p>{{ destination.description }}</p>
   
       <h3>Experiencias</h3>
       <div>
-        <div v-for="experience in destination.experiences" :key="experience.id">
+        <div v-for="experience in destination.experiences" :key="experience.slug">
           <img :src="experience.image"/>
           <h3>{{ experience.name }}</h3>
           <p>{{ experience.description }}</p>
@@ -16,26 +16,22 @@
   </template>
   
   <script setup>
+  import data from '@/assets/data.json';
   import { ref, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
-  import data from '@/assets/data.json';
   
   const route = useRoute();
   const destination = ref(null);
   
-
-  onMounted(() => {
-    const { slug } = route.params;
-    destination.value = data.destinations.find(
-      (dest) => dest.slug === slug
-    );
-  });
-
-  console.log(destination);
-
-  </script>
-
-
+  const getImagePath = (imageName) => {
+  return `/images/${imageName}`;
+}
   
-
+const destinationLink = computed(() => {
+  return (id) => {
+    return `/destination/${id}`;
+  };
+});
+  </script>
+  
   

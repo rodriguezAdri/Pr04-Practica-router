@@ -1,41 +1,43 @@
 <template>
-    <div v-if="destination">
-      <img :src="destination.image"/>
-      <h2>{{ destination.name }}</h2>
+  <div>
+    <router-link class="go-back" to="/">Go back</router-link>
+    <h1>{{ destination.name }}</h1>
+
+    <div class="destination-details">
+      <img :src="`/images/${destination.image}`"/>
       <p>{{ destination.description }}</p>
-  
-      <h3>Experiencias</h3>
-      <div>
-        <div v-for="experience in destination.experiences" :key="experience.id">
-          <img :src="experience.image"/>
-          <h3>{{ experience.name }}</h3>
-          <p>{{ experience.description }}</p>
+    </div>
+    
+    <div class="experiences">
+      <h2>Top experiences in {{ destination.name }}</h2>
+      <div class="cards">
+        <div class="card" v-for="experience in destination.experiences" :key="experience.slug">
+          <router-link :to="`/destination/${destination.id}/${experience.slug}`">
+            <img :src="`/images/${experience.image}`"/>
+            <div class="card__text">{{ experience.name }}</div>
+          </router-link>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
-  import data from '@/assets/data.json';
-  
-  const route = useRoute();
-  const destination = ref(null);
-  
 
-  onMounted(() => {
-    const { slug } = route.params;
-    destination.value = data.destinations.find(
-      (dest) => dest.slug === slug
-    );
-  });
+    <router-view></router-view>
+  </div>
+</template>
 
-  console.log(destination);
+<script setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import data from '@/assets/data.json';
 
-  </script>
+const route = useRoute();
+const destination = ref(null);
 
+// Funció que agafa l'id de la ruta
+const fetchDestination = () => {
+  const id = parseInt(route.params.id);
+  destination.value = data.destinations.find((dest) => dest.id === id);
+};
 
-  
-
-  
+//Serveix per cambiar directament el nav y no tornar a carregar-lo
+watch(() => route.params.id, fetchDestination, {immediate: true})
+</script>
